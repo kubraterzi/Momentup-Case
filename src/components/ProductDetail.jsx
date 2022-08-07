@@ -1,5 +1,5 @@
 import {
-    Box, 
+    Box,
     Card,
     CardMedia,
     Grid, IconButton,
