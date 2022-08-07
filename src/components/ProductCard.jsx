@@ -33,7 +33,7 @@ const ProductCard = (props) => {
             <CardMedia  component="img"
                         height="520"
                         width="655"
-                        image={`images/${props.product?.image_name}.png`}
+                        image={`/images/${props.product?.image_name}.png`}
                         alt={props.product?.image_name}>
             </CardMedia>
             <CardContent>

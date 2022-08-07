@@ -3,10 +3,10 @@ import Router from "./router/Router";
 
 const App = () => {
 
-    return (
-        <MainContextProvider>
-                <Router />
+    return (<MainContextProvider>
+            <Router/>
         </MainContextProvider>
+
 
     );
 }
