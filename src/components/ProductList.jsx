@@ -1,12 +1,12 @@
-import {AppBar, Box, Button, FormControl, Grid, IconButton, InputLabel, MenuItem, Select, Toolbar} from "@mui/material";
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import {AppBar, Box, Button, Grid, Toolbar} from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
 
 
 import {useEffect, useState} from "react";
-// import axios from "axios";
 import {MainContext, useContext} from "../context/MainContext";
 import ProductCard from "./ProductCard";
+import FilterOptions from "./FilterOptions";
+import SortOptions from "./SortOptions";
 
 
 const buttonStyle = {
@@ -23,41 +23,15 @@ const buttonStyle = {
 
 const ProductList = () => {
 
-    const {products, filterOptions, sortOptions, filter, sort} = useContext(MainContext)
+    const {products} = useContext(MainContext)
 
 
     const [filteredProductList, setFilteredProductList] = useState([])
-    const [category, setCategory] = useState("");
-    const [color, setColor] = useState("");
-    const [sortType, setSortType] = useState("");
 
     useEffect(() => {
         document.body.style.backgroundColor="white"
     }, [])
 
-    const handleChangeForCategory = (event) => {
-        setCategory(event.target.value);
-    };
-
-    const handleChangeForColor = (event) => {
-        setColor(event.target.value);
-    };
-
-    const handleChangeForSortType = (event) => {
-        setSortType(event.target.value);
-    };
-
-
-    const filterProducts = () => {
-        const filteredProducts = filter({categoryName: category, colorName: color})
-        setFilteredProductList(filteredProducts)
-    }
-
-
-    const sortProducts = (sortTypeId) => {
-        const sortedProducts = sort({sortTypeId: sortTypeId})
-        setFilteredProductList(sortedProducts)
-    }
 
     const navigateToHome = () => {
         setFilteredProductList(products)
@@ -65,7 +39,9 @@ const ProductList = () => {
 
 
     useEffect(() => {
-        setFilteredProductList(products)
+        if (!filteredProductList.length > 0) {
+            setFilteredProductList(products)
+        }
     },[products])
 
 
@@ -76,62 +52,11 @@ const ProductList = () => {
                         <Grid container spacing={2}
                               sx={{marginTop: "1rem", width: "80%", marginRight: "auto", marginLeft: "auto"}}>
                             <Grid item xs={10}>
-                                <FormControl sx={{m: 2, minWidth: 150}}>
-                                    <InputLabel id="demo-simple-select-helper-label">Category</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-helper-label"
-                                        id="demo-simple-select-helper"
-                                        value={category}
-                                        label="Category"
-                                        onChange={handleChangeForCategory}
-                                    >
-
-                                        {filterOptions[0]?.values.map((option, index) => (
-                                            <MenuItem key={index} value={option}> {option}</MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-
-                                <FormControl sx={{m: 2, minWidth: 120}}>
-                                    <InputLabel id="demo-simple-select-helper-label">Color</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-helper-label"
-                                        id="demo-simple-select-helper"
-                                        value={color}
-                                        label="Color"
-                                        onChange={handleChangeForColor}
-                                    >
-
-                                        {filterOptions[1]?.values.map((option, index) => (
-                                            <MenuItem key={index} value={option}> {option} </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-
-                                <IconButton aria-label="Filter" sx={{marginTop: "1rem"}} onClick={filterProducts}>
-                                    <FilterAltIcon fontSize="large"/>
-                                </IconButton>
+                                <FilterOptions setFilteredProductList={setFilteredProductList}/>
                             </Grid>
-
                             <Grid item xs={2}>
-                                <FormControl sx={{m: 2, minWidth: 120}}>
-                                    <InputLabel id="demo-simple-select-helper-label">Sort</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-helper-label"
-                                        id="demo-simple-select-helper"
-                                        value={sortType}
-                                        label="Sort"
-                                        onChange={handleChangeForSortType}
-                                    >
-                                        {
-                                            sortOptions.map(type => (
-                                                <MenuItem key={type.id} value={type.name}
-                                                          onClick={() => sortProducts(type.id)}> {type.name} </MenuItem>
-                                            ))
-                                        }
-                                    </Select>
-                                </FormControl>
-
+                                <SortOptions setFilteredProductList={setFilteredProductList}
+                                             filteredProductList={filteredProductList}/>
                             </Grid>
                         </Grid>
                     </Toolbar>
@@ -153,11 +78,9 @@ const ProductList = () => {
                             <ProductCard key={product.id} product={product}/>
                         ))}
                     </div>
-
-                    {filteredProductList.length > 0 &&
-                        <div style={{textAlign: "center", marginTop: "2rem"}}>
-                            {filteredProductList.length > 1 ? `${filteredProductList.length} products found` : `${filteredProductList.length} product found`}
-                        </div>}
+                    <div style={{textAlign: "center", marginTop: "2rem"}}>
+                        {filteredProductList.length > 1 ? `${filteredProductList.length} products found` : `${filteredProductList.length} product found`}
+                    </div>
                 </div>
                 :
                 <div style={{
@@ -175,10 +98,7 @@ const ProductList = () => {
                             HOME
                         </Button>
                     </div>
-
                 </div>
-
-
             }
         </>
     )
