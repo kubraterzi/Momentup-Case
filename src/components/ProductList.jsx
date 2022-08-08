@@ -3,7 +3,7 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import HomeIcon from '@mui/icons-material/Home';
 
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 // import axios from "axios";
 import {MainContext, useContext} from "../context/MainContext";
 import ProductCard from "./ProductCard";
@@ -25,10 +25,15 @@ const ProductList = () => {
 
     const {products, filterOptions, sortOptions, filter, sort} = useContext(MainContext)
 
-    const [filteredProductList, setFilteredProductList] = useState(products)
-    const [category, setCategory] = useState('none');
-    const [color, setColor] = useState('none');
-    const [sortType, setSortType] = useState('none');
+
+    const [filteredProductList, setFilteredProductList] = useState([])
+    const [category, setCategory] = useState("");
+    const [color, setColor] = useState("");
+    const [sortType, setSortType] = useState("");
+
+    useEffect(() => {
+        document.body.style.backgroundColor="white"
+    }, [])
 
     const handleChangeForCategory = (event) => {
         setCategory(event.target.value);
@@ -59,29 +64,10 @@ const ProductList = () => {
     }
 
 
-    // useEffect(()=>{
-    //     const a = filter({categoryName: "Dress", colorName:"Blue"})
-    //     console.log({a})
-    // }, [])
+    useEffect(() => {
+        setFilteredProductList(products)
+    },[products])
 
-    // useEffect(()=>{
-    //
-    //
-    //     axios.get("https://www.momentup.co/challange/ProductsWithFilter.json")
-    //         // {
-    //         // headers: {
-    //         //     'Access-Control-Allow-Origin': '*', // how to set axios header
-    //         //     'Content-Type': 'application/json'
-    //         // }})
-    //         .then(response => {
-    //             console.log(response.data)
-    //             setProductList(response.data)
-    //         })
-    // },[])
-
-    // useEffect(() => {
-    //     setProductList(products)
-    // }, [])
 
     return (<>
             <Box sx={{flexGrow: 1}}>
