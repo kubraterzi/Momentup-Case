@@ -29,7 +29,7 @@ const ProductDetail = () => {
 
     const handleNavigateToHome = () => {
         navigate("/")
-        document.body.style.backgroundColor="white"
+
     }
 
     useEffect(() => {

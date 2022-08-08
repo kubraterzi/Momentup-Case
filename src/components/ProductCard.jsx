@@ -29,10 +29,8 @@ const ProductCard = (props) => {
     }
 
     return(
-        <Card sx={{ width: 300, marginLeft: "2rem", marginBottom: "2rem" }}>
+        <Card sx={{ marginLeft: "2rem", marginBottom: "2rem" }}>
             <CardMedia  component="img"
-                        height="520"
-                        width="655"
                         image={`/images/${props.product?.image_name}.png`}
                         alt={props.product?.image_name}>
             </CardMedia>
