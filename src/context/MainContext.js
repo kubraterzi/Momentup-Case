@@ -7,15 +7,49 @@ const MainContext = createContext()
 const MainContextProvider = ({children}) => {
 
     const [products, setProducts] = useState([])
+    // const [currentProduct, setCurrentProduct] = useState([])
     const [filterOptions, setFilterOptions] = useState([])
     const [sortOptions, setSortOptions] = useState([])
 
-    const getProductById = (id) => {
-        return products.find(product => product.id == id)
+
+    const fetchProducts = () => {
+        axios.get("http://localhost:3004/products")
+            .then(response => {
+                setProducts(response.data)
+            })
     }
 
+    const fetchFilterOptions = () => {
+        axios.get("http://localhost:3004/filter_options")
+            .then(response => {
+                setFilterOptions(response.data)
+            })
+
+    }
+
+    const fetchSortOptions = () => {
+        axios.get("http://localhost:3004/sort_options")
+            .then(response => {
+                setSortOptions(response.data)
+            })
+    }
+
+    const getProductById = (id) => {
+        return axios.get(`http://localhost:3004/products/${id}`)
+            .then(response => {
+               return response.data;
+            })
+    }
+
+
+    useEffect(() => {
+        fetchProducts()
+        fetchFilterOptions()
+        fetchSortOptions()
+    }, [])
+
+
     const filter = ({categoryName, colorName}) => {
-        console.log({categoryName, colorName})
         return products.filter(product => {
             if (categoryName && colorName) {
                 return product.category === categoryName && product.color === colorName
@@ -33,6 +67,7 @@ const MainContextProvider = ({children}) => {
         })
     }
 
+
     const sort = ({sortTypeId}) => {
         switch (sortTypeId) {
             case "price":
@@ -49,35 +84,13 @@ const MainContextProvider = ({children}) => {
                 break;
 
             default:
-                return null;
+                return true;
         }
     }
 
 
-    useEffect(() => {
-        axios.get("http://localhost:3004/products")
-            .then(response => {
-                setProducts(response.data)
-            })
-    },[])
 
-    useEffect(() => {
-        axios.get("http://localhost:3004/filter_options")
-            .then(response => {
-                setFilterOptions(response.data)
-            })
-    },[])
-
-    useEffect(() => {
-         axios.get("http://localhost:3004/sort_options")
-            .then(response => {
-                setSortOptions(response.data)
-            })
-    },[])
-
-
-
-    const data = { filterOptions, sortOptions, getProductById, filter, sort, products, setProducts}
+    const data = {filterOptions, sortOptions, getProductById, filter, sort, products}
 
     return <MainContext.Provider value={data}>{children}</MainContext.Provider>
 }

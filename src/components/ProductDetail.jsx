@@ -33,8 +33,13 @@ const ProductDetail = () => {
     }
 
     useEffect(() => {
-        const product = getProductById(id)
-        setCurrentProduct(product)
+        const fetchCurrentProduct = async(id) =>{
+            const product = await getProductById(+id)
+            setCurrentProduct(product)
+        }
+
+        fetchCurrentProduct(id)
+
     }, [id])
 
 
@@ -106,10 +111,12 @@ const ProductDetail = () => {
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <IconButton aria-label="Filter" sx={{marginTop: "1rem"}} onClick={handleNavigateToHome}>
-                                        <ArrowBackIosIcon fontSize="large" />
-                                        <span style={{fontSize: "1.25rem"}}>HOME</span>
-                                    </IconButton>
+                                    <TableCell>
+                                        <IconButton aria-label="Filter" sx={{marginTop: "1rem"}} onClick={handleNavigateToHome}>
+                                            <ArrowBackIosIcon fontSize="large" />
+                                            <span style={{fontSize: "1.25rem"}}>HOME</span>
+                                        </IconButton>
+                                    </TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
