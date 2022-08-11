@@ -7,7 +7,6 @@ const MainContext = createContext()
 const MainContextProvider = ({children}) => {
 
     const [products, setProducts] = useState([])
-    // const [currentProduct, setCurrentProduct] = useState([])
     const [filterOptions, setFilterOptions] = useState([])
     const [sortOptions, setSortOptions] = useState([])
 
@@ -68,23 +67,22 @@ const MainContextProvider = ({children}) => {
     }
 
 
-    const sort = ({sortTypeId}) => {
+    const sort = ({filteredList, sortTypeId}) => {
         switch (sortTypeId) {
             case "price":
-                return products.sort((a, b) => (a.price - b.price))
+                return filteredList.sort((a, b) => (a.price - b.price))
                 break;
             case "priced":
-                return products.sort((a, b) => (b.price - a.price))
+                return filteredList.sort((a, b) => (b.price - a.price))
                 break;
             case "title":
-                return products.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
+                return filteredList.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
                 break;
             case "titled":
-                return products.sort((a, b) => ((b.name > a.name) ? 1 : (a.name > b.name) ? -1 : 0))
+                return filteredList.sort((a, b) => ((b.name > a.name) ? 1 : (a.name > b.name) ? -1 : 0))
                 break;
-
             default:
-                return true;
+                return null;
         }
     }
 

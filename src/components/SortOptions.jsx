@@ -2,7 +2,7 @@ import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 import {useState} from "react";
 import {MainContext, useContext} from "../context/MainContext";
 
-const SortOptions = ({setFilteredProductList}) => {
+const SortOptions = ({setFilteredProductList, filteredProductList}) => {
 
     const { sortOptions, sort} = useContext(MainContext)
 
@@ -14,9 +14,10 @@ const SortOptions = ({setFilteredProductList}) => {
 
 
     const sortProducts = (sortTypeId) => {
-        const sortedProducts = sort({sortTypeId: sortTypeId})
-        setFilteredProductList(sortedProducts.slice(0,10))
+        const sortedProducts = sort({filteredList: filteredProductList, sortTypeId: sortTypeId})
+        setFilteredProductList(sortedProducts.slice(0, filteredProductList.length))
     }
+
 
 
     return (
