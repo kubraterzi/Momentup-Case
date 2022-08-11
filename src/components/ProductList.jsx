@@ -7,6 +7,7 @@ import {MainContext, useContext} from "../context/MainContext";
 import ProductCard from "./ProductCard";
 import FilterOptions from "./FilterOptions";
 import SortOptions from "./SortOptions";
+import {useSearchParams} from "react-router-dom";
 
 
 const buttonStyle = {
@@ -23,10 +24,10 @@ const buttonStyle = {
 
 const ProductList = () => {
 
-    const {products} = useContext(MainContext)
-
+    const {products, filter} = useContext(MainContext)
 
     const [filteredProductList, setFilteredProductList] = useState([])
+
 
     useEffect(() => {
         document.body.style.backgroundColor="white"
@@ -43,6 +44,7 @@ const ProductList = () => {
             setFilteredProductList(products)
         }
     },[products])
+
 
 
     return (<>
