@@ -19,8 +19,8 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 
 const ProductDetail = () => {
-    const {id} = useParams()
-    const {getProductById} = useContext(MainContext)
+    const { id } = useParams()
+    const { getProductById, products } = useContext(MainContext)
 
     const navigate = useNavigate()
 
@@ -33,14 +33,11 @@ const ProductDetail = () => {
     }
 
     useEffect(() => {
-        const fetchCurrentProduct = async(id) =>{
-            const product = await getProductById(+id)
-            setCurrentProduct(product)
-        }
+        const product = getProductById(+id)
+        setCurrentProduct(product)
 
-        fetchCurrentProduct(id)
 
-    }, [id])
+    }, [id, products])
 
 
     useEffect(()=> {

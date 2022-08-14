@@ -12,32 +12,30 @@ const MainContextProvider = ({children}) => {
 
 
     const fetchProducts = () => {
-        axios.get("http://localhost:3004/products")
+        axios.get("https://momentup-case-study.herokuapp.com")
             .then(response => {
-                setProducts(response.data)
+                setProducts(response.data.products)
             })
     }
 
     const fetchFilterOptions = () => {
-        axios.get("http://localhost:3004/filter_options")
+        axios.get("https://momentup-case-study.herokuapp.com")
             .then(response => {
-                setFilterOptions(response.data)
+                setFilterOptions(response.data.filter_options)
             })
 
     }
 
     const fetchSortOptions = () => {
-        axios.get("http://localhost:3004/sort_options")
+        axios.get("https://momentup-case-study.herokuapp.com")
             .then(response => {
-                setSortOptions(response.data)
+                setSortOptions(response.data.sort_options)
             })
     }
 
+
     const getProductById = (id) => {
-        return axios.get(`http://localhost:3004/products/${id}`)
-            .then(response => {
-               return response.data;
-            })
+        return products.find(product=> product.id == id)
     }
 
 
