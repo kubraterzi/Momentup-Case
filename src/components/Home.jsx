@@ -1,9 +1,8 @@
-import ProductList from "./ProductList";
-import {Outlet} from "@mui/icons-material";
+import {Outlet} from "react-router-dom";
+
 
 const Home = () => {
     return <div>
-        <ProductList />
         <Outlet />
     </div>
 }
