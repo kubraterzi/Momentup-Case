@@ -25,7 +25,7 @@ const ProductCard = (props) => {
     const navigate = useNavigate()
 
     const handleNavigateToDetail = ()=> {
-        navigate(`products/${props.product?.id}`)
+        navigate( `/products/${props.product?.id}`, {replace: true})
     }
 
     return(
