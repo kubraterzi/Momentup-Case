@@ -7,7 +7,6 @@ import {MainContext, useContext} from "../context/MainContext";
 import ProductCard from "./ProductCard";
 import FilterOptions from "./FilterOptions";
 import SortOptions from "./SortOptions";
-import {useSearchParams} from "react-router-dom";
 
 
 const buttonStyle = {
@@ -24,7 +23,7 @@ const buttonStyle = {
 
 const ProductList = () => {
 
-    const {products, filter} = useContext(MainContext)
+    const {products } = useContext(MainContext)
 
     const [filteredProductList, setFilteredProductList] = useState([])
 
